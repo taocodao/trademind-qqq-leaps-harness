@@ -1,0 +1,35 @@
+{
+  "initial_capital": 30000.0,
+  "final_nav": 169249.41363915312,
+  "total_return_pct": 464.16471213051034,
+  "cagr_pct": 36.26651062654822,
+  "sharpe": 1.4753858863015203,
+  "max_drawdown_pct": -17.77001872410563,
+  "years": 5.591269841269841,
+  "entry_ml_min": 0.43,
+  "calmar": 2.0408819590804073,
+  "engine_metrics": {
+    "initial_capital": 30000.0,
+    "final_nav": 169249.41363915312,
+    "total_return_pct": 464.16471213051034,
+    "cagr_pct": 36.236608490356744,
+    "years": 5.595238095238095,
+    "sharpe": 1.4753858863015203,
+    "sortino": 1.8316438520245208,
+    "max_drawdown_pct": -17.770018724105633,
+    "calmar": 2.0391992294977475,
+    "leaps_trades_closed": 11,
+    "pmcc_trades_closed": 392,
+    "leaps_win_rate_pct": 90.9090909090909,
+    "pmcc_win_rate_pct": 85.20408163265306,
+    "total_pnl_leaps": 109136.95225072422,
+    "total_pnl_shorts": 32944.704929468244,
+    "pmcc_skips": 1032,
+    "pmcc_opens": 392,
+    "pmcc_skip_reasons": {
+      "SKIP_TREND_THINPREMIUM": 95,
+      "SKIP_LOW_VRP": 149,
+      "SKIP_STRONG_TREND": 788
+    }
+  }
+}

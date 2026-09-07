@@ -1,0 +1,6 @@
+__pycache__/
+output/
+*.pyc
+data/qqq_*.csv
+data/vix*.csv
+data/irx*.csv

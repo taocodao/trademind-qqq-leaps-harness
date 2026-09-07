@@ -1,0 +1,78 @@
+{
+  "run": {
+    "name": "V4 trend+IV canonical public record",
+    "window_start": "2021-01-04",
+    "window_end": "2026-08-14",
+    "initial_capital_usd": 30000,
+    "evaluation": "hourly bars, one decision window per trading day at 15:00 ET",
+    "nav_marking": "daily close",
+    "pricing": "Black-Scholes theoretical values for every option mark and fill",
+    "data": {
+      "qqq_1h": "hourly QQQ bars",
+      "qqq_1d": "daily QQQ bars",
+      "vix_1d": "daily VIX close",
+      "vix3m_1d": "daily VIX3M close",
+      "irx_1d": "daily 13-week T-bill yield, used as the risk-free rate (forward-filled, 4.5% fallback)"
+    }
+  },
+  "entry_conditions_all_required": {
+    "regime_not_bear": "3-state Gaussian HMM decoded causally (no look-ahead); BEAR and BEAR_SMA_FORCED block entry",
+    "vix_below": 40.0,
+    "price_above_sma100": true,
+    "rsi14_below": 35.0,
+    "gap_down_at_least": 0.003,
+    "ml_confidence_at_least": 0.43,
+    "put_demand_proxy_at_most": 1.5
+  },
+  "leaps_selection": {
+    "bull_strong": {"delta": 0.85, "dte": 365, "size_multiplier": 1.0},
+    "bull_moderate": {"delta": 0.80, "dte": 540, "size_multiplier": 0.85},
+    "other": {"delta": 0.65, "dte": 730, "size_multiplier": 0.5},
+    "max_positions": 3,
+    "max_position_pct_of_nav": 0.33,
+    "max_contracts": 5,
+    "cash_reserve_pct": 0.05
+  },
+  "pmcc_overlay": {
+    "short_call_dte": 32,
+    "target_delta_bull_strong": 0.28,
+    "target_delta_bull_moderate": 0.23,
+    "target_delta_defensive": 0.15,
+    "gates": {
+      "skip_strong_trend": "regime BULL_STRONG and ADX14 >= 16",
+      "skip_low_vrp": "implied vol below 0.7x realized vol",
+      "skip_high_put_demand": "put demand proxy above 1.2 (never triggered in window)",
+      "skip_trend_thinpremium_v4": "ADX14 >= 25 and implied vol below realized vol"
+    },
+    "management": {
+      "profit_take_early_pct": 0.20,
+      "profit_take_late_pct": 0.10,
+      "gamma_manage_dte": 21,
+      "loss_multiple_of_credit": 2.0,
+      "roll_delta": 0.40
+    }
+  },
+  "adaptive_exits": {
+    "exit_delta_low_bull": 0.55,
+    "exit_delta_low_bear": 0.70,
+    "exit_dte_min_bull": 60,
+    "exit_dte_min_bear": 120
+  },
+  "costs": {
+    "commission_per_contract_usd": 1.00,
+    "slippage_half_spread_of_premium_by_vix": {
+      "vix_below_18": 0.0035,
+      "vix_18_to_25": 0.006,
+      "vix_25_to_35": 0.010,
+      "vix_35_plus": 0.020
+    }
+  },
+  "iv_model": {
+    "base": "VIX close divided by 100",
+    "multiplier_by_vix": {"vix_below_18": 1.30, "vix_18_to_25": 1.22, "vix_25_to_35": 1.10, "vix_35_plus": 0.65},
+    "qqq_premium_longs": 1.10,
+    "short_scale": 1.12
+  },
+  "ml_confidence": "precomputed walk-forward model output shipped as data; model internals are not published",
+  "sensitivity_note": "entry_ml_min 0.45 instead of 0.43 excludes one trade (2026-07-28) and yields 35.3% CAGR instead of 36.3% over the same window"
+}
