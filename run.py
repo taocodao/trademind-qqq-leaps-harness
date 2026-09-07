@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-run.py - reproduce the published V4 record exactly.
+run.py - reproduce the published QQQ LEAPS record exactly.
 
 Reads CSVs from ./data, runs the full 2021-01-04 -> 2026-08-14 window with
 the canonical configuration (entry_ml_min = 0.43), and writes:
 
-    output/nav_v4_reproduced.csv      daily equity curve
-    output/fills_v4_reproduced.csv    every fill, repriced live
-    output/metrics_v4_reproduced.json headline metrics
+    output/nav_qqq_leaps_reproduced.csv      daily equity curve
+    output/fills_qqq_leaps_reproduced.csv    every fill, repriced live
+    output/metrics_qqq_leaps_reproduced.json headline metrics
 
 Compare against expected/ to verify bit-for-bit reproduction.
 """
@@ -47,13 +47,13 @@ def main() -> None:
     res = M.run_enhanced(VAL_START, VAL_END, data, features)
 
     nav = res["nav_series"]
-    nav.to_csv(OUT / "nav_v4_reproduced.csv", index=False)
+    nav.to_csv(OUT / "nav_qqq_leaps_reproduced.csv", index=False)
 
     for key in ("fills", "ledger", "trades", "fills_df"):
         if key in res and res[key] is not None:
             v = res[key]
             df = v if isinstance(v, pd.DataFrame) else pd.DataFrame(v)
-            df.to_csv(OUT / "fills_v4_reproduced.csv", index=False)
+            df.to_csv(OUT / "fills_qqq_leaps_reproduced.csv", index=False)
             print(f"fills saved from engine key '{key}': {len(df)} rows", flush=True)
             break
 
@@ -78,13 +78,13 @@ def main() -> None:
     except Exception as exc:  # noqa: BLE001
         mtr["engine_metrics_error"] = str(exc)
 
-    with open(OUT / "metrics_v4_reproduced.json", "w") as f:
+    with open(OUT / "metrics_qqq_leaps_reproduced.json", "w") as f:
         json.dump(mtr, f, indent=2, default=str)
 
     print("\n=== reproduced headline ===")
     for k in ("total_return_pct", "cagr_pct", "sharpe", "max_drawdown_pct", "calmar", "final_nav"):
         print(f"  {k}: {mtr[k]:.4f}" if isinstance(mtr[k], float) else f"  {k}: {mtr[k]}")
-    print("\ncompare against expected/metrics_v4_canonical.json")
+    print("\ncompare against expected/metrics_qqq_leaps_canonical.json")
     print("DONE")
 
 

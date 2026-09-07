@@ -7,6 +7,9 @@ PHASE 2: Options-market features added to the stack
 PHASE 3: All upgrades combined
 PHASE 4: Adaptive rule-based exit surrogate
 
+NOTE: internal variable names keep the V* research labels; the strategy
+sold on trademind.bot under the name QQQ LEAPS is this exact engine.
+
 PUBLIC EDITION: the walk-forward ML confidence model is private. Its
 precomputed output ships as data/ml_confidence.csv and is loaded as a
 column. Everything else in the decision stack is the exact production code.

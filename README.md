@@ -1,6 +1,6 @@
-# TradeMind V4 Harness
+# TradeMind QQQ LEAPS Harness
 
-The open reproducibility harness behind the V4 record published at
+The open reproducibility harness behind the QQQ LEAPS record published at
 [trademind.bot/verify](https://trademind.bot/verify): QQQ LEAPS core
 positions with a volatility-gated covered-call overlay, evaluated hourly
 over January 4, 2021 through August 14, 2026.
@@ -18,8 +18,8 @@ anything here.
 ## Quick start
 
 ```bash
-git clone https://github.com/taocodao/trademind-v4-harness
-cd trademind-v4-harness
+git clone https://github.com/taocodao/trademind-qqq-leaps-harness
+cd trademind-qqq-leaps-harness
 pip install -r requirements.txt
 python download_data.py   # fetches QQQ/VIX/VIX3M/IRX into ./data
 python run.py             # writes output/, prints the headline numbers
@@ -28,8 +28,8 @@ python run.py             # writes output/, prints the headline numbers
 Then diff your results against the published run:
 
 ```bash
-diff output/metrics_v4_reproduced.json <(cat expected/metrics_v4_canonical.json) # metrics
-head -5 output/fills_v4_reproduced.csv   # every fill, repriced live
+diff output/metrics_qqq_leaps_reproduced.json <(cat expected/metrics_qqq_leaps_canonical.json) # metrics
+head -5 output/fills_qqq_leaps_reproduced.csv   # every fill, repriced live
 ```
 
 `expected/` contains the canonical NAV series, ledger, metrics, and run
@@ -42,7 +42,7 @@ metrics should match.
 **Open:** the full engine (`qqq_leaps_enhanced_2y_hourly.py`), including
 the Gaussian-HMM regime classifier, Black-Scholes pricing, strike
 selection, position sizing, the PMCC overlay gates (strong-trend,
-low-VRP, put-demand, and the V4 trend-times-IV rule), adaptive exits,
+low-VRP, put-demand, and the QQQ LEAPS trend-times-IV rule), adaptive exits,
 slippage and commission modeling, and the complete run configuration.
 
 **Private:** the walk-forward ML confidence model used as one of seven
@@ -84,7 +84,7 @@ difference yourself.
   to the test.
 - **One window.** 5.6 years containing one deep QQQ correction, mostly a
   rising market.
-- **Design selection.** Variants were tried; V4 is the one published.
+- **Design selection.** Variants were tried; QQQ LEAPS is the one published.
   Combinatorial cross-validation (18 of 21 paths better on CAGR and
   Sharpe versus the unfiltered engine) mitigates but does not eliminate
   selection effects.
